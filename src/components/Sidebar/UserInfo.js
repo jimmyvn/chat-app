@@ -5,6 +5,7 @@ import { auth, db } from '../../configs/firebase'
 import styled from 'styled-components'
 import { AuthContext } from '../../context/AuthProvider'
 import useFirestore from '../../hooks/useFirestore'
+import { collection, getDocs, query, where } from '@firebase/firestore'
 
 const WrapperUserInfoStyled = styled.div`
   display: flex;
@@ -22,17 +23,6 @@ export default function UserInfo() {
   const { user: {
     displayName, photoURL, uid
   } } = React.useContext(AuthContext)
-
-  const conditionData = React.useMemo(() => {
-    return {
-      field: 'email',
-      operator: '==',
-      value: 'raccoon.otter.271@example.com'
-    }
-  }, [uid])
-
-  const data = useFirestore('users', conditionData);
-  console.log(data);
 
   return (
     <WrapperUserInfoStyled>

@@ -2,11 +2,8 @@ import React from 'react'
 import {
   collection,
   onSnapshot,
-  getDocs,
   query,
   where,
-  orderBy,
-  limit
 } from 'firebase/firestore'
 import { db } from '../configs/firebase';
 

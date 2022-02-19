@@ -3,6 +3,7 @@ import { Row, Col, Typography, Button } from 'antd'
 import { auth, db } from '../../configs/firebase'
 import { collection, addDoc, getDocs, where, query, limit } from 'firebase/firestore'
 import { FacebookAuthProvider, signInWithPopup } from '@firebase/auth'
+import { addDocument } from '../../configs/FirebaseService'
 
 const { Title } = Typography
 
@@ -17,15 +18,11 @@ const Login = () => {
     const userDoc = await getDocs(userQuery)
 
     if (userDoc.docs.length === 0) {
-      await addDoc(usersRef, {
+      addDocument('users', {
         displayName: user.displayName,
         email: user.email,
         uid: user.uid,
-        photoURL: user.photoURL,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      }).then((doc) => {
-        console.log(doc)
+        photoURL: user.photoURL
       })
     }
   }

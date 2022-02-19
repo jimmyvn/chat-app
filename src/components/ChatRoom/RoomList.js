@@ -1,7 +1,10 @@
-import { Collapse, Typography } from 'antd'
-import { LinkOutlined } from '@ant-design/icons'
+import { Button, Collapse, Typography } from 'antd'
+import { LinkOutlined, PlusOutlined } from '@ant-design/icons'
 import React from 'react'
 import styled from 'styled-components'
+import AddChannelModal from './partials/AddChannelModal'
+import { AppContext } from '../../context/AppProvider'
+import useFirestore from '../../hooks/useFirestore'
 
 const { Panel } = Collapse
 
@@ -34,20 +37,54 @@ const TypographyLinkStyled = styled(Typography.Link)`
   }
 `
 
+const AddChannelButtonStyled = styled(Button)`
+  color: #fff !important;
+  transition: all .3s !important;
+  width: 100%;
+  text-align: left;
+  border-radius: 0;
+  padding-left: 40px;
+
+  &:hover {
+    color: #ddd;
+    background-color: #313131;
+  }
+`
+
 export default function RoomList() {
+
+  const {
+    channels,
+    setIsDisplayAddChannelModal
+  } = React.useContext(AppContext)
+
+  const handleAddChannel = () => {
+    setIsDisplayAddChannelModal(true)
+  }
+
   return (
-    <Collapse ghost defaultActiveKey={['rooms-list']}>
-      <PanelStyled header="Channels" key="rooms-list">
-        <TypographyLinkStyled className="room-item">
-          <LinkOutlined style={{ marginRight: '5px' }} /> Room 1
-        </TypographyLinkStyled>
-        <TypographyLinkStyled className="room-item">
-          <LinkOutlined style={{ marginRight: '5px' }} /> Room 1
-        </TypographyLinkStyled>
-        <TypographyLinkStyled className="room-item">
-          <LinkOutlined style={{ marginRight: '5px' }} /> Room 3
-        </TypographyLinkStyled>
-      </PanelStyled>
-    </Collapse>
+    <>
+      <Collapse ghost defaultActiveKey={['rooms-list']}>
+        <PanelStyled header="Channels" key="rooms-list">
+          {
+            channels.map((channel) => {
+              return <TypographyLinkStyled key={channel.id} className="room-item">
+                <LinkOutlined style={{ marginRight: '5px' }} />
+                {channel.title}
+              </TypographyLinkStyled>
+            })
+          }
+        </PanelStyled>
+      </Collapse>
+
+      <AddChannelButtonStyled
+        type='text'
+        icon={<PlusOutlined />}
+        onClick={handleAddChannel}
+      >
+        Add channel
+      </AddChannelButtonStyled>
+      <AddChannelModal />
+    </>
   )
 }
