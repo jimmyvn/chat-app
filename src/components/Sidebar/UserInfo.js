@@ -1,11 +1,9 @@
 import React from 'react'
 import { Avatar, Button, Typography } from 'antd'
 import { LogoutOutlined } from '@ant-design/icons'
-import { auth, db } from '../../configs/firebase'
+import { auth } from '../../configs/firebase'
 import styled from 'styled-components'
 import { AuthContext } from '../../context/AuthProvider'
-import useFirestore from '../../hooks/useFirestore'
-import { collection, getDocs, query, where } from '@firebase/firestore'
 
 const WrapperUserInfoStyled = styled.div`
   display: flex;
@@ -21,7 +19,7 @@ const WrapperUserInfoStyled = styled.div`
 
 export default function UserInfo() {
   const { user: {
-    displayName, photoURL, uid
+    displayName, photoURL
   } } = React.useContext(AuthContext)
 
   return (

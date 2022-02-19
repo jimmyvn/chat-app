@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col, Typography, Button } from 'antd'
 import { auth, db } from '../../configs/firebase'
-import { collection, addDoc, getDocs, where, query, limit } from 'firebase/firestore'
+import { collection, getDocs, where, query, limit } from 'firebase/firestore'
 import { FacebookAuthProvider, signInWithPopup } from '@firebase/auth'
 import { addDocument } from '../../configs/FirebaseService'
 

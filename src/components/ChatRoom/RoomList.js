@@ -4,7 +4,6 @@ import React from 'react'
 import styled from 'styled-components'
 import AddChannelModal from './partials/AddChannelModal'
 import { AppContext } from '../../context/AppProvider'
-import useFirestore from '../../hooks/useFirestore'
 
 const { Panel } = Collapse
 
@@ -31,6 +30,10 @@ const TypographyLinkStyled = styled(Typography.Link)`
     padding: 5px;
     padding-left: 40px;
 
+    &.active {
+      background-color: #313131;
+    }
+
     &:hover {
       background-color: #313131;
     }
@@ -55,11 +58,17 @@ export default function RoomList() {
 
   const {
     channels,
-    setIsDisplayAddChannelModal
+    setIsDisplayAddChannelModal,
+    idChannelSelected,
+    setIsChannelSelected
   } = React.useContext(AppContext)
 
   const handleAddChannel = () => {
     setIsDisplayAddChannelModal(true)
+  }
+
+  const handleSelectChannel = (channelId) => {
+    setIsChannelSelected(channelId)
   }
 
   return (
@@ -68,7 +77,11 @@ export default function RoomList() {
         <PanelStyled header="Channels" key="rooms-list">
           {
             channels.map((channel) => {
-              return <TypographyLinkStyled key={channel.id} className="room-item">
+              return <TypographyLinkStyled
+                key={channel.id}
+                className={idChannelSelected === channel.id ? 'active' : ''}
+                onClick={() => handleSelectChannel(channel.id)}
+              >
                 <LinkOutlined style={{ marginRight: '5px' }} />
                 {channel.title}
               </TypographyLinkStyled>

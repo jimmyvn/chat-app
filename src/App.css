@@ -4,3 +4,33 @@
   box-sizing: border-box;
   margin: 0;
 }
+
+
+.chat-window-content {
+  height: 100vh;
+}
+
+.chat-window-empty-channel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.channel__description {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header__left {
+  width: 50%;
+}
+
+.channel__name {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

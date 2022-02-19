@@ -15,6 +15,11 @@ const useFirestore = (collectionName, condition) => {
     const collectionRef = collection(db, collectionName)
     let collectionQuery = query(collectionRef)
     if (condition) {
+
+      if (condition.value == undefined || condition.value.length === 0) {
+        return
+      }
+
       collectionQuery = query(collectionRef, where(
         condition.field,
         condition.operator,

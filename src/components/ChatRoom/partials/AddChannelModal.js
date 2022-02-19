@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal, Form, Input } from 'antd';
 import { AppContext } from '../../../context/AppProvider';
 import { addDocument } from '../../../configs/FirebaseService'
+import { AuthContext } from '../../../context/AuthProvider';
 
 const AddChannelModal = () => {
 
@@ -12,6 +13,10 @@ const AddChannelModal = () => {
     setIsDisplayAddChannelModal
   } = React.useContext(AppContext)
 
+  const { user: {
+    uid
+  } } = React.useContext(AuthContext)
+
   const handleOk = () => {
     setIsDisplayAddChannelModal(false);
     const formData = form.getFieldsValue()
@@ -20,7 +25,10 @@ const AddChannelModal = () => {
       return
     }
 
-    addDocument('channels', formData)
+    addDocument('channels', {
+      ...formData,
+      members: [uid]
+    })
     form.resetFields()
   }
 

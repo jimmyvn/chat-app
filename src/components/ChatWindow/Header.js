@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Avatar, Tooltip, Button } from 'antd'
-import { UserOutlined, AntDesignOutlined, PlusCircleOutlined } from '@ant-design/icons'
+import { Avatar, Tooltip, Button, Alert, Empty } from 'antd'
+import { UserOutlined, AntDesignOutlined, PlusCircleOutlined, InfoCircleFilled } from '@ant-design/icons'
+import { AppContext } from '../../context/AppProvider'
 
 const HeaderStyled = styled.div`
   && {
@@ -37,12 +38,16 @@ const HeaderStyled = styled.div`
 `
 
 export default function Header() {
+
+  const { idChannelSelected, channels } = React.useContext(AppContext)
+  const channelSelected = channels.find(room => room.id === idChannelSelected)
+
   return (
     <>
       <HeaderStyled>
         <div className="header__left">
-          <div className="channel__name">Room 1</div>
-          <div className="channel__description">This is the channel description</div>
+          <div className="channel__name">{channelSelected.title}</div>
+          <div className="channel__description">{channelSelected.description}</div>
         </div>
         <div className="header__right">
           <Button type='text' icon={<PlusCircleOutlined />}>Invite</Button>
