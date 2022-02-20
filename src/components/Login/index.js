@@ -3,7 +3,7 @@ import { Row, Col, Typography, Button } from 'antd'
 import { auth, db } from '../../configs/firebase'
 import { collection, getDocs, where, query, limit } from 'firebase/firestore'
 import { FacebookAuthProvider, signInWithPopup } from '@firebase/auth'
-import { addDocument } from '../../configs/FirebaseService'
+import { addDocument, generateKeywords } from '../../configs/FirebaseService'
 
 const { Title } = Typography
 
@@ -22,7 +22,8 @@ const Login = () => {
         displayName: user.displayName,
         email: user.email,
         uid: user.uid,
-        photoURL: user.photoURL
+        photoURL: user.photoURL,
+        keywords: generateKeywords(user.displayName)
       })
     }
   }

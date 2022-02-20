@@ -7,10 +7,10 @@ const ChatRoom = () => {
 
   return (
     <Row>
-      <Col className="sidebar" span={7}>
+      <Col className="sidebar" span={5}>
         <Sidebar />
       </Col>
-      <Col className="chat-window-content" span={17}>
+      <Col className="chat-window-content" span={19}>
         <ChatWindow />
       </Col>
     </Row>

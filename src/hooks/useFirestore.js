@@ -4,6 +4,7 @@ import {
   onSnapshot,
   query,
   where,
+  orderBy
 } from 'firebase/firestore'
 import { db } from '../configs/firebase';
 
@@ -13,10 +14,11 @@ const useFirestore = (collectionName, condition) => {
 
   React.useEffect(() => {
     const collectionRef = collection(db, collectionName)
-    let collectionQuery = query(collectionRef)
+    let collectionQuery = query(collectionRef, orderBy('createdAt'))
     if (condition) {
 
       if (condition.value == undefined || condition.value.length === 0) {
+        setDocuments([])
         return
       }
 
@@ -24,7 +26,7 @@ const useFirestore = (collectionName, condition) => {
         condition.field,
         condition.operator,
         condition.value
-      ))
+      ), orderBy('createdAt'))
     }
 
     const unsubscribe = onSnapshot(collectionQuery, (docs) => {

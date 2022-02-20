@@ -60,16 +60,8 @@ export default function RoomList() {
     channels,
     setIsDisplayAddChannelModal,
     idChannelSelected,
-    setIsChannelSelected
+    setIdChannelSelected
   } = React.useContext(AppContext)
-
-  const handleAddChannel = () => {
-    setIsDisplayAddChannelModal(true)
-  }
-
-  const handleSelectChannel = (channelId) => {
-    setIsChannelSelected(channelId)
-  }
 
   return (
     <>
@@ -80,7 +72,7 @@ export default function RoomList() {
               return <TypographyLinkStyled
                 key={channel.id}
                 className={idChannelSelected === channel.id ? 'active' : ''}
-                onClick={() => handleSelectChannel(channel.id)}
+                onClick={() => setIdChannelSelected(channel.id)}
               >
                 <LinkOutlined style={{ marginRight: '5px' }} />
                 {channel.title}
@@ -93,7 +85,7 @@ export default function RoomList() {
       <AddChannelButtonStyled
         type='text'
         icon={<PlusOutlined />}
-        onClick={handleAddChannel}
+        onClick={() => setIsDisplayAddChannelModal(true)}
       >
         Add channel
       </AddChannelButtonStyled>

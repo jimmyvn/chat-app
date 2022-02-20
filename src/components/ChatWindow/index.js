@@ -11,11 +11,11 @@ const ChatWindow = () => {
       {
         idChannelSelected !== undefined
           ?
-          <div>
+          <div style={{ height: '100vh' }}>
             <div className="header">
               <Header />
             </div >
-            <div>
+            <div className="messages-list-and-form-send">
               <MessagesList />
             </div>
           </div>

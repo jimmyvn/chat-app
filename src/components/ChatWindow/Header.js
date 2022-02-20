@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Avatar, Tooltip, Button, Alert, Empty } from 'antd'
-import { UserOutlined, AntDesignOutlined, PlusCircleOutlined, InfoCircleFilled } from '@ant-design/icons'
+import { Avatar, Button } from 'antd'
+import { PlusCircleOutlined } from '@ant-design/icons'
 import { AppContext } from '../../context/AppProvider'
 
 const HeaderStyled = styled.div`
@@ -9,10 +9,8 @@ const HeaderStyled = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 0 20px;
-    margin-bottom: 10px;
     height: 60px;
     align-items: center;
-    background: #fff;
     box-shadow: 0px 11px 14px -6px rgba(0,0,0,0.29);
     -webkit-box-shadow: 0px 11px 14px -6px rgba(0,0,0,0.29);
     -moz-box-shadow: 0px 11px 14px -6px rgba(0,0,0,0.29);
@@ -37,10 +35,29 @@ const HeaderStyled = styled.div`
   }
 `
 
-export default function Header() {
+const MemberAvatarStyled = styled(Avatar)`
+  &&& {
+    &.ant-avatar-circle {
+      border: 1px solid #888;
+      background: #f1f1f1;
+    }
 
-  const { idChannelSelected, channels } = React.useContext(AppContext)
-  const channelSelected = channels.find(room => room.id === idChannelSelected)
+    .ant-avatar-string {
+      color: #4e4e4e;
+    }
+  }
+`
+
+export default function Header() {
+  const {
+    channelSelected,
+    setIsDisplayInviteMemberModal,
+    channelMembers
+  } = React.useContext(AppContext)
+
+  const handleClickInviteMemberToChannelButton = () => {
+    setIsDisplayInviteMemberModal(true)
+  }
 
   return (
     <>
@@ -50,21 +67,28 @@ export default function Header() {
           <div className="channel__description">{channelSelected.description}</div>
         </div>
         <div className="header__right">
-          <Button type='text' icon={<PlusCircleOutlined />}>Invite</Button>
+          <Button
+            type='primary'
+            icon={<PlusCircleOutlined />}
+            onClick={handleClickInviteMemberToChannelButton}
+          >
+            Invite
+          </Button>
           <Avatar.Group
             maxCount={4}
             size="large"
             maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
           >
-            <Avatar src="https://joeschmoe.io/api/v1/random" />
-            <Avatar src="https://joeschmoe.io/api/v1/random" />
-            <Avatar src="https://joeschmoe.io/api/v1/random" />
-            <Avatar src="https://joeschmoe.io/api/v1/random" />
-            <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-            <Tooltip title="Ant User" placement="top">
-              <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
-            </Tooltip>
-            <Avatar style={{ backgroundColor: '#1890ff' }} icon={<AntDesignOutlined />} />
+            {
+              channelMembers.map((member) => {
+                return <MemberAvatarStyled
+                  key={member.id}
+                  src={member.photoURL}
+                >
+                  {member?.photoURL ? '' : member.displayName?.charAt(0).toUpperCase()}
+                </MemberAvatarStyled>
+              })
+            }
           </Avatar.Group>
         </div>
       </HeaderStyled>
