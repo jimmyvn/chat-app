@@ -4,6 +4,7 @@ import { LogoutOutlined } from '@ant-design/icons'
 import { auth } from '../../configs/firebase'
 import styled from 'styled-components'
 import { AuthContext } from '../../context/AuthProvider'
+import { AppContext } from '../../context/AppProvider'
 
 const WrapperUserInfoStyled = styled.div`
   display: flex;
@@ -22,6 +23,13 @@ export default function UserInfo() {
     displayName, photoURL
   } } = React.useContext(AuthContext)
 
+  const { clearState } = React.useContext(AppContext);
+
+  const handleSigOut = () => {
+    clearState()
+    auth.signOut()
+  }
+
   return (
     <WrapperUserInfoStyled>
       <div className="user__information">
@@ -33,7 +41,7 @@ export default function UserInfo() {
       <Button
         type='ghost'
         style={{ color: '#fff' }}
-        onClick={() => auth.signOut()}
+        onClick={handleSigOut}
         icon={<LogoutOutlined />}
       >
         Sign Out

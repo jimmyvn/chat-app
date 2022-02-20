@@ -1,4 +1,4 @@
-import { Form, Input } from 'antd'
+import { Empty, Form, Input } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
 import { addDocument } from '../../configs/FirebaseService'
@@ -77,25 +77,31 @@ export default function MessagesList() {
 
   return (
     <>
-      <ContentStyled ref={messageListRef}>
-        {
-          messages.map((message) => {
-            let isBelongsToCurrentUser = false
-            if (message.userId === uid) {
-              isBelongsToCurrentUser = true
+      {
+        messages.length > 0 ?
+          <ContentStyled ref={messageListRef}>
+            {
+              messages.map((message) => {
+                let isBelongsToCurrentUser = false
+                if (message.userId === uid) {
+                  isBelongsToCurrentUser = true
+                }
+                return <Message
+                  key={message.id}
+                  photoURL={message.photoURL}
+                  name={message.name}
+                  content={message.content}
+                  createdAt={message.createdAt}
+                  own={isBelongsToCurrentUser}
+                />
+              })
             }
-            return <Message
-              key={message.id}
-              photoURL={message.photoURL}
-              name={message.name}
-              content={message.content}
-              createdAt={message.createdAt}
-              own={isBelongsToCurrentUser}
-            />
-          })
-        }
-      </ContentStyled>
-
+          </ContentStyled>
+          :
+          <div className="chat-window-empty-channel">
+            <Empty description="No messages has found" style={{ color: '#c2cbd3' }} />
+          </div>
+      }
       <Form
         form={form}
       >

@@ -40,6 +40,12 @@ export default function AppProvider({ children }) {
 
   const channelMembers = useFirestore('users', membersCondition)
 
+  const clearState = () => {
+    setIdChannelSelected(undefined);
+    setIsDisplayAddChannelModal(false);
+    setIsDisplayInviteMemberModal(false);
+  };
+
   return <AppContext.Provider value={{
     isDisplayAddChannelModal,
     setIsDisplayAddChannelModal,
@@ -49,7 +55,8 @@ export default function AppProvider({ children }) {
     idChannelSelected,
     setIdChannelSelected,
     channelSelected,
-    channelMembers
+    channelMembers,
+    clearState
   }}>
     {children}
   </AppContext.Provider >

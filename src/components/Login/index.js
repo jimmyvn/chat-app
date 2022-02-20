@@ -4,8 +4,17 @@ import { auth, db } from '../../configs/firebase'
 import { collection, getDocs, where, query, limit } from 'firebase/firestore'
 import { FacebookAuthProvider, signInWithPopup } from '@firebase/auth'
 import { addDocument, generateKeywords } from '../../configs/FirebaseService'
+import styled from 'styled-components'
 
 const { Title } = Typography
+
+const RowStyled = styled(Row)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: radial-gradient(circle, rgba(116,116,116,1) 0%, rgba(23,102,122,1) 0%, rgba(0,40,50,1) 100%);
+`
 
 const Login = () => {
 
@@ -30,7 +39,7 @@ const Login = () => {
 
   return (
     <>
-      <Row style={{ height: 800 }} justify='center' align='middle'>
+      <RowStyled>
         <Col span={8}>
           <Title style={{ textAlign: 'center' }} level={2}>
             Chat application
@@ -47,7 +56,7 @@ const Login = () => {
             Login with Google
           </Button>
         </Col>
-      </Row>
+      </RowStyled>
     </>
   )
 }
